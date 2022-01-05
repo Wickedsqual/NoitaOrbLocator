@@ -6,9 +6,8 @@
       <id>NoitaOrbLocator</id>
       <repositories>
         <repository>
-           <id>releases</id>
-	   <username>${reproUser}</username>
-	   <password>${reproPw}</password>
+            <id>releases</id>
+  			<url>https://github.com/Wickedsqual/NoitaOrbLocator/raw/master/NoitaOrbLocator/releases</url>
         </repository>
       </repositories>
     </profile>
@@ -16,4 +15,11 @@
   <activeProfiles>
     <activeProfile>NoitaOrbLocator</activeProfile>
   </activeProfiles>
+  <servers>
+     <server>
+       <id>rs207599</id>
+           <username>${reproUser}</username>
+	   	   <password>${reproPw}</password>
+     </server>
+  </servers>
 </settings>
