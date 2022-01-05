@@ -33,6 +33,6 @@ jobs:
     - name: Publish to GitHub Packages Apache Maven
       run: |
         cd NoitaOrbLocator
-        mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+        mvn deploy -s $GITHUB_WORKSPACE/NoitaOrbLocator/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
