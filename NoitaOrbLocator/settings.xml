@@ -6,8 +6,7 @@
       <id>NoitaOrbLocator</id>
       <repositories>
         <repository>
-          <id>releases</id>
-           <id>rs207599</id>
+           <id>releases</id>
 	   <username>${reproUser}</username>
 	   <password>${reproPw}</password>
         </repository>
