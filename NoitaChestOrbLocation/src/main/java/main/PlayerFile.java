@@ -15,7 +15,6 @@ import infoClasses.PlayerLocation;
 
 public class PlayerFile {
 
-	// private String entityTagName = "Entity";
 	private String transformTagName = "_Transform";
 	private String playerLocationXAttributeName = "position.x";
 	private String playerLocationYAttributeName = "position.y";
