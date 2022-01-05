@@ -36,3 +36,5 @@ jobs:
         mvn deploy -s $GITHUB_WORKSPACE/NoitaOrbLocator/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
+        REPROPW: ${{secrets.REPROPW}}
+        REPROUSER: ${{secrets.REPROUSER}}
