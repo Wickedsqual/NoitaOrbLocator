@@ -16,3 +16,7 @@ All infos are read from the save00 folder. (C:\Users\[USER]\AppData\LocalLow\Nol
 
 
 A filewatcher checks the player.xml for changes, so if Noita is restarted, is automatically updated the player location in this application
+
+
+
+At the moment, only Windows is supported
