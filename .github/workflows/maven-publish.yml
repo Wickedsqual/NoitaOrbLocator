@@ -6,9 +6,6 @@ name: Maven Package
 on:
   release:
     types: [created]
-  push:
-    branches:
-      - main
 
 jobs:
   build:
@@ -32,10 +29,15 @@ jobs:
       run: |
           ls -la "/home/runner/work/NoitaOrbLocator"
           ls -la "/home/runner/work/NoitaOrbLocator/NoitaOrbLocator"
+          cd /home/runner/work/NoitaOrbLocator/NoitaOrbLocator
+          ls -la
+          ls -la NoitaOrbLocator
       
 
     - name: Build with Maven
-      run: mvn clean install
+      run: |
+        cd NoitaOrbLocator
+        mvn clean install
 
     - name: Publish to GitHub Packages Apache Maven
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
