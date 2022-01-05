@@ -17,9 +17,9 @@
   </activeProfiles>
   <servers>
      <server>
-       <id>rs207599</id>
-           <username>${REPROUSER}</username>
-	   <password>${REPROPW}</password>
+       <id>releases</id>
+       <username>${REPROUSER}</username>
+       <password>${REPROPW}</password>
      </server>
   </servers>
 </settings>
