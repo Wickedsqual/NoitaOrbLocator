@@ -15,4 +15,4 @@ All infos are read from the save00 folder. (C:\Users\[USER]\AppData\LocalLow\Nol
 3. It calculates and shows the difference between the 2 values.
 
 
-A filewatcher checks the player.xml fore changes, so if Noita is restarted, is automatically updated the player location in this application
+A filewatcher checks the player.xml for changes, so if Noita is restarted, is automatically updated the player location in this application
