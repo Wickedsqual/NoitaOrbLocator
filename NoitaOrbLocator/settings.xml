@@ -6,16 +6,7 @@
       <id>NoitaOrbLocator</id>
       <repositories>
         <repository>
-          <id>central</id>
-          <name>Maven Repository Switchboard</name>
-          <layout>default</layout>
-          <url>http://repo1.maven.org/maven2</url>
-          <snapshots>
-            <enabled>false</enabled>
-          </snapshots>
-        </repository>
-        <repository>
-          <id>public-mvn-repo-releases</id>
+          <id>releases</id>
           <url>https://github.com/Wickedsqual/NoitaOrbLocator/raw/master/NoitaOrbLocator/releases</url>
         </repository>
       </repositories>

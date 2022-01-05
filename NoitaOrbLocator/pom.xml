@@ -86,5 +86,11 @@
     </plugins>
     
     </build>
+    <distributionManagement>
+     <repository>
+          <id>releases</id>
+          <url>https://github.com/Wickedsqual/NoitaOrbLocator/raw/master/NoitaOrbLocator/releases</url>
+        </repository>
+    </distributionManagement>
   
 </project>
