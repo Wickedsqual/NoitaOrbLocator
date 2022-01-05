@@ -7,7 +7,7 @@
       <repositories>
         <repository>
             <id>releases</id>
-  			<url>https://github.com/Wickedsqual/NoitaOrbLocator/raw/master/NoitaOrbLocator/releases</url>
+  	    <url>https://github.com/Wickedsqual/NoitaOrbLocator/raw/master/NoitaOrbLocator/releases</url>
         </repository>
       </repositories>
     </profile>
@@ -18,8 +18,8 @@
   <servers>
      <server>
        <id>rs207599</id>
-           <username>${reproUser}</username>
-	   	   <password>${reproPw}</password>
+           <username>${REPROUSER}</username>
+	   <password>${REPROPW}</password>
      </server>
   </servers>
 </settings>
