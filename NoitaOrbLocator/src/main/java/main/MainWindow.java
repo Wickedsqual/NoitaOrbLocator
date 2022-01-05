@@ -157,7 +157,7 @@ public class MainWindow extends JFrame {
 		}
 	}
 
-	// TODO move to common bas (abstract class?)
+	// TODO move to common base (abstract class?)
 	private void addComponent(Component component, int row, int column, int fill, double weightX, double weightY) {
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = fill;
