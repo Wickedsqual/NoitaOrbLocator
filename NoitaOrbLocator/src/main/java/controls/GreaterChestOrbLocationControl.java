@@ -1,5 +1,6 @@
 package controls;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -7,9 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import events.OrbLocationChangedListener;
 import greaterOrbFinder.GreaterOrbFinderWrapper;
 import infoClasses.OrbLocation;
+import main.GridBagLayoutHelper;
 import main.StatsFile;
 import main.ThreadHelper;
 
@@ -26,8 +30,6 @@ public class GreaterChestOrbLocationControl extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 400794653835139424L;
-
-	private JLabel textAreaInfo = new JLabel("GreaterOrbLocation");
 
 	private JLabel seedLabel = new JLabel("Seed");
 	private JLabel newGameLabel = new JLabel("NG+");
@@ -45,23 +47,27 @@ public class GreaterChestOrbLocationControl extends JPanel {
 
 	public GreaterChestOrbLocationControl(OrbLocationChangedListener orbLocationChangedListener) {
 
+		GridBagLayoutHelper layoutHelper = new GridBagLayoutHelper(this);
+
+		TitledBorder infoTitleBorder = BorderFactory.createTitledBorder("GreaterOrbLocation");
+		infoTitleBorder.setTitleColor(Color.blue);
+		this.setBorder(infoTitleBorder);
+
 		this.setLayout(new GridBagLayout());
 
-		addComponent(textAreaInfo, 0, 0, GridBagConstraints.HORIZONTAL);
+		layoutHelper.addComponent(seedLabel, 0, 0);
+		layoutHelper.addComponent(seedTextArea, 0, 1);
 
-		addComponent(seedLabel, 1, 0, GridBagConstraints.HORIZONTAL);
-		addComponent(seedTextArea, 1, 1, GridBagConstraints.HORIZONTAL);
+		layoutHelper.addComponent(newGameLabel, 1, 0);
+		layoutHelper.addComponent(newGameTextArea, 1, 1);
 
-		addComponent(newGameLabel, 2, 0, GridBagConstraints.HORIZONTAL);
-		addComponent(newGameTextArea, 2, 1, GridBagConstraints.HORIZONTAL);
+		layoutHelper.addComponent(xStartLabel, 2, 0);
+		layoutHelper.addComponent(xStartTextArea, 2, 1);
 
-		addComponent(xStartLabel, 3, 0, GridBagConstraints.HORIZONTAL);
-		addComponent(xStartTextArea, 3, 1, GridBagConstraints.HORIZONTAL);
+		layoutHelper.addComponent(yStartLabel, 3, 0);
+		layoutHelper.addComponent(yStartTextArea, 3, 1);
 
-		addComponent(yStartLabel, 4, 0, GridBagConstraints.HORIZONTAL);
-		addComponent(yStartTextArea, 4, 1, GridBagConstraints.HORIZONTAL);
-
-		addComponent(findOrbButton, 5, 0, GridBagConstraints.HORIZONTAL);
+		layoutHelper.addComponent(findOrbButton, 4, 0);
 
 		addOrbLocationChangedListener(orbLocationChangedListener);
 

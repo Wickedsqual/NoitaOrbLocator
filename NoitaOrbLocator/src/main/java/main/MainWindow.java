@@ -1,15 +1,18 @@
 package main;
 
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 import controls.GreaterChestOrbLocationControl;
 import events.OrbLocationChangedListener;
@@ -26,6 +29,10 @@ public class MainWindow extends JFrame {
 
 	private PlayerFileWatcher playerFileWatcher = new PlayerFileWatcher();
 
+	private JPanel mainPanel = new JPanel();
+	private JPanel infoPanel = new JPanel();
+	private JPanel todoPanel = new JPanel();
+
 	private JLabel playerlocationInfoLabel = new JLabel("PlayerLocation");
 	private JLabel playerlocationLabel = new JLabel("No Location");
 	private JLabel orblocationInfoLabel = new JLabel("OrbLocation");
@@ -36,6 +43,7 @@ public class MainWindow extends JFrame {
 	private JLabel diffYLabel = new JLabel("No Difference for Now");
 
 	private JLabel diffToDoLabel = new JLabel("Nothing to do for Now");
+	private BasicArrowButton todoButton = new BasicArrowButton(0);
 
 	private GreaterChestOrbLocationControl greaterChestOrbLocationControl;
 
@@ -46,7 +54,7 @@ public class MainWindow extends JFrame {
 
 		this.setSize(450, 400);
 
-		this.setLayout(new GridBagLayout());
+		this.add(mainPanel);
 
 		greaterChestOrbLocationControl = new GreaterChestOrbLocationControl(new OrbLocationChangedListener() {
 
@@ -59,19 +67,47 @@ public class MainWindow extends JFrame {
 
 		});
 
-		addComponent(diffToDoLabel, 0, 0);
+		TitledBorder infoTitleBorder = BorderFactory.createTitledBorder("Infos");
+		infoTitleBorder.setTitleColor(Color.blue);
+		infoPanel.setBorder(infoTitleBorder);
 
-		addComponent(diffInfoLabel, 2, 0);
-		addComponent(diffXLabel, 3, 0);
-		addComponent(diffYLabel, 3, 1);
+		GridBagLayoutHelper infoPanelLayoutHelper = new GridBagLayoutHelper(infoPanel);
 
-		addComponent(playerlocationInfoLabel, 4, 0, 0.0, 0.0);
-		addComponent(playerlocationLabel, 4, 1);
+		System.out.println("InfoPanel");
+		System.out.println("\r\nPlayerLocation");
+		infoPanelLayoutHelper.addComponent(playerlocationInfoLabel, 0, 0, 0.0, 0.0);
+		infoPanelLayoutHelper.addComponent(playerlocationLabel, 0, 1);
 
-		addComponent(orblocationInfoLabel, 5, 0, 0.0, 0.0);
-		addComponent(orblocationLabel, 5, 1);
+		System.out.println("\r\nOrbLocation");
+		infoPanelLayoutHelper.addComponent(orblocationInfoLabel, 1, 0, 0.0, 0.0);
+		infoPanelLayoutHelper.addComponent(orblocationLabel, 1, 1);
 
-		addComponent(greaterChestOrbLocationControl, 6, 0, GridBagConstraints.HORIZONTAL, 0.5, 0.2, 2);
+
+		System.out.println("\r\nDiffInfo");
+		infoPanelLayoutHelper.addComponent(diffInfoLabel, 2, 0);
+
+		System.out.println("\r\nDiffX and Y");
+		infoPanelLayoutHelper.addComponent(diffXLabel, 3, 0);
+		infoPanelLayoutHelper.addComponent(diffYLabel, 3, 1);
+
+
+		GridBagLayoutHelper mainPanelLayoutHelper = new GridBagLayoutHelper(mainPanel);
+		System.out.println("\r\nMainLayout");
+
+		TitledBorder todoTitleBorder = BorderFactory.createTitledBorder("TODO:");
+		todoTitleBorder.setTitleColor(Color.blue);
+		todoPanel.setBorder(todoTitleBorder);
+		todoPanel.add(diffToDoLabel);
+
+
+		todoButton.setSize(50, 50);
+		todoButton.setBackground(Color.white);
+		todoPanel.add(todoButton);
+		mainPanelLayoutHelper.addComponent(todoPanel, 0, 0);
+
+		mainPanelLayoutHelper.addComponent(infoPanel, 1, 0);
+
+		mainPanelLayoutHelper.addComponent(greaterChestOrbLocationControl, 2, 0, GridBagConstraints.HORIZONTAL, 0.5, 0.2, 2);
 
 		updatePlayerLocation();
 		this.addWindowListener(new WindowAdapter() {
@@ -132,9 +168,11 @@ public class MainWindow extends JFrame {
 			String todo = "<html>";
 			if (xDiff > 0) {
 				todo += "Move Left: " + Math.abs(xDiff) + " Pixel";
+				todoButton.setDirection(BasicArrowButton.WEST);
 
 			} else if (xDiff < 0) {
 				todo += "Move Right: " + Math.abs(xDiff) + " Pixel";
+				todoButton.setDirection(BasicArrowButton.EAST);
 			}
 
 			if (todo.length() > 0) {
@@ -142,9 +180,11 @@ public class MainWindow extends JFrame {
 			}
 			if (yDiff > 0) {
 				todo += "Move Down: " + Math.abs(yDiff) + " Pixel";
+				todoButton.setDirection(BasicArrowButton.SOUTH);
 
 			} else if (yDiff < 0) {
 				todo += "Move Up: " + Math.abs(yDiff) + " Pixel";
+				todoButton.setDirection(BasicArrowButton.NORTH);
 			}
 
 			if (todo.length() > 0) {
@@ -157,37 +197,4 @@ public class MainWindow extends JFrame {
 		}
 	}
 
-	// TODO move to common base (abstract class?)
-	private void addComponent(Component component, int row, int column, int fill, double weightX, double weightY) {
-		GridBagConstraints c = new GridBagConstraints();
-		c.fill = fill;
-		c.weightx = weightX;
-		c.weighty = weightY;
-		c.gridx = column;
-		c.gridy = row;
-		this.add(component, c);
-	}
-
-	private void addComponent(Component component, int row, int column, int fill, double weightX, double weightY, int gridwith) {
-		GridBagConstraints c = new GridBagConstraints();
-		c.gridwidth = gridwith;
-		c.fill = fill;
-		c.weightx = weightX;
-		c.weighty = weightY;
-		c.gridx = column;
-		c.gridy = row;
-		this.add(component, c);
-	}
-
-	private void addComponent(Component component, int row, int column) {
-		addComponent(component, row, column, GridBagConstraints.HORIZONTAL);
-	}
-
-	private void addComponent(Component component, int row, int column, int fill) {
-		addComponent(component, row, column, fill, 0.5, 0.2);
-	}
-
-	private void addComponent(Component component, int row, int column, double weightX, double weightY) {
-		addComponent(component, row, column, GridBagConstraints.HORIZONTAL, weightX, weightY);
-	}
 }
