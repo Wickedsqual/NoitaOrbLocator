@@ -5,26 +5,19 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class GridBagLayoutHelper {
 
 	private Container parent;
-
 	private GridBagLayout gridBagLayout = new GridBagLayout();
+
+	private static final Logger log = LoggerFactory.getLogger(GridBagLayoutHelper.class);
 
 	public GridBagLayoutHelper(Container parent) {
 		this.parent = parent;
 		parent.setLayout(gridBagLayout);
-	}
-
-	private int getLayoutRows() {
-
-		int[][] dim = gridBagLayout.getLayoutDimensions();
-		return dim[1].length;
-	}
-
-	private int getLayoutColumns() {
-		int[][] dim = gridBagLayout.getLayoutDimensions();
-		return dim[0].length;
 	}
 
 	public void addComponent(Component child, int row, int column, int fill, double weightX, double weightY, int gridwith) {
@@ -36,7 +29,7 @@ public class GridBagLayoutHelper {
 		c.gridx = column;
 		c.gridy = row;
 
-		System.out.println(String.format("Add to row: %s, col: %s", row, column));
+		log.debug(String.format("Add to row: %s, col: %s", row, column));
 
 		parent.add(child, c);
 	}
@@ -57,7 +50,18 @@ public class GridBagLayoutHelper {
 		addComponent(child, row, column, GridBagConstraints.HORIZONTAL, weightX, weightY);
 	}
 
+
 	// Not working correct, because the gridBagLayout.getLayoutDimensions() doesnt see to give the correct values every time
+
+	// private int getLayoutRows() {
+	// int[][] dim = gridBagLayout.getLayoutDimensions();
+	// return dim[1].length;
+	// }
+	//
+	// private int getLayoutColumns() {
+	// int[][] dim = gridBagLayout.getLayoutDimensions();
+	// return dim[0].length;
+	// }
 
 	// public void addComponentToNewRow(Component child) {
 	// addComponentToNewRow(child, 0, 0.5, 0.5);
@@ -69,12 +73,12 @@ public class GridBagLayoutHelper {
 	//
 	// public void addComponentToNewRow(Component child, int column, int fill, double weightX, double weightY) {
 	// int row = parent.getComponentCount() == 0 ? 0 : getLayoutRows() + 1;
-	// System.out.println("newRow: " + row);
+	// log.debug("newRow: " + row);
 	// addComponent(child, row, column, fill, weightX, weightY);
 	// }
 	//
 	// public void addComponentToLastRow(Component child, int column) {
-	// System.out.println("lastRow: " + getLayoutRows());
+	// log.debug("lastRow: " + getLayoutRows());
 	// addComponent(child, getLayoutRows(), column, GridBagConstraints.HORIZONTAL, 0.5, 0.5);
 	// }
 

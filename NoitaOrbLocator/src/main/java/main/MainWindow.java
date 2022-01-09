@@ -16,9 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import controls.GreaterChestOrbLocationControl;
 import events.OrbLocationChangedListener;
 import events.PlayerFileChangedListener;
+import infoClasses.LocationDiff;
 import infoClasses.OrbLocation;
 import infoClasses.PlayerLocation;
 
@@ -52,6 +56,8 @@ public class MainWindow extends JFrame {
 	private PlayerLocation currentPlayerLocation;
 	private OrbLocation currentOrbLocation;
 
+	private static final Logger log = LoggerFactory.getLogger(MainWindow.class);
+
 	public MainWindow() throws IOException {
 
 		this.setSize(450, 400);
@@ -75,26 +81,26 @@ public class MainWindow extends JFrame {
 
 		GridBagLayoutHelper infoPanelLayoutHelper = new GridBagLayoutHelper(infoPanel);
 
-		System.out.println("InfoPanel");
-		System.out.println("\r\nPlayerLocation");
+		log.debug("InfoPanel");
+		log.debug("PlayerLocation");
 		infoPanelLayoutHelper.addComponent(playerlocationInfoLabel, 0, 0, 0.0, 0.0);
 		infoPanelLayoutHelper.addComponent(playerlocationLabel, 0, 1);
 
-		System.out.println("\r\nOrbLocation");
+		log.debug("OrbLocation");
 		infoPanelLayoutHelper.addComponent(orblocationInfoLabel, 1, 0, 0.0, 0.0);
 		infoPanelLayoutHelper.addComponent(orblocationLabel, 1, 1);
 
 
-		System.out.println("\r\nDiffInfo");
+		log.debug("DiffInfo");
 		infoPanelLayoutHelper.addComponent(diffInfoLabel, 2, 0);
 
-		System.out.println("\r\nDiffX and Y");
+		log.debug("DiffX and Y");
 		infoPanelLayoutHelper.addComponent(diffXLabel, 3, 0);
 		infoPanelLayoutHelper.addComponent(diffYLabel, 3, 1);
 
 
 		GridBagLayoutHelper mainPanelLayoutHelper = new GridBagLayoutHelper(mainPanel);
-		System.out.println("\r\nMainLayout");
+		log.debug("MainLayout");
 
 		TitledBorder todoTitleBorder = BorderFactory.createTitledBorder("TODO:");
 		todoTitleBorder.setTitleColor(Color.blue);
@@ -164,43 +170,18 @@ public class MainWindow extends JFrame {
 			double xDiff = currentPlayerLocation.getLocationX() - currentOrbLocation.getLocationX();
 			double yDiff = currentPlayerLocation.getLocationY() - currentOrbLocation.getLocationY();
 
-
 			DecimalFormat df = new DecimalFormat("####0.00");
 			df.setRoundingMode(RoundingMode.HALF_DOWN);
 
 			ThreadHelper.updateLabelText(diffXLabel, df.format(xDiff));
 			ThreadHelper.updateLabelText(diffYLabel, df.format(yDiff));
 
-			String todo = "<html>";
-			if (xDiff > 0) {
-				todo += "Move Left: " + df.format(Math.abs(xDiff)) + " Pixel";
-				todoButton.setDirection(BasicArrowButton.WEST);
+			LocationDiff diff = new LocationDiff(xDiff, yDiff);
+			ThreadHelper.updateLabelText(diffToDoLabel, diff.toString());
 
-			} else if (xDiff < 0) {
-				todo += "Move Right: " + df.format(Math.abs(xDiff)) + " Pixel";
-				todoButton.setDirection(BasicArrowButton.EAST);
-			}
+			ThreadHelper.setBasicButtonDirection(todoButton, diff.getDiffDirection());
 
-			if (todo.length() > 0) {
-				todo += "<br>";
-			}
-			if (yDiff > 0) {
-				todo += "Move Down: " + df.format(Math.abs(yDiff)) + " Pixel";
-				todoButton.setDirection(BasicArrowButton.SOUTH);
-
-			} else if (yDiff < 0) {
-				todo += "Move Up: " + df.format(Math.abs(yDiff)) + " Pixel";
-				todoButton.setDirection(BasicArrowButton.NORTH);
-			}
-
-			if (todo.length() > 0) {
-				todo += "</html>";
-			} else {
-				todo += "Hold still and keep sweating!";
-			}
-
-			ThreadHelper.updateLabelText(diffToDoLabel, todo);
+			todoButton.setDirection(BasicArrowButton.NORTH);
 		}
 	}
-
 }
