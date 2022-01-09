@@ -6,6 +6,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -162,16 +164,20 @@ public class MainWindow extends JFrame {
 			double xDiff = currentPlayerLocation.getLocationX() - currentOrbLocation.getLocationX();
 			double yDiff = currentPlayerLocation.getLocationY() - currentOrbLocation.getLocationY();
 
-			ThreadHelper.updateLabelText(diffXLabel, Double.toString(xDiff));
-			ThreadHelper.updateLabelText(diffYLabel, Double.toString(yDiff));
+
+			DecimalFormat df = new DecimalFormat("####0.00");
+			df.setRoundingMode(RoundingMode.HALF_DOWN);
+
+			ThreadHelper.updateLabelText(diffXLabel, df.format(xDiff));
+			ThreadHelper.updateLabelText(diffYLabel, df.format(yDiff));
 
 			String todo = "<html>";
 			if (xDiff > 0) {
-				todo += "Move Left: " + Math.abs(xDiff) + " Pixel";
+				todo += "Move Left: " + df.format(Math.abs(xDiff)) + " Pixel";
 				todoButton.setDirection(BasicArrowButton.WEST);
 
 			} else if (xDiff < 0) {
-				todo += "Move Right: " + Math.abs(xDiff) + " Pixel";
+				todo += "Move Right: " + df.format(Math.abs(xDiff)) + " Pixel";
 				todoButton.setDirection(BasicArrowButton.EAST);
 			}
 
@@ -179,11 +185,11 @@ public class MainWindow extends JFrame {
 				todo += "<br>";
 			}
 			if (yDiff > 0) {
-				todo += "Move Down: " + Math.abs(yDiff) + " Pixel";
+				todo += "Move Down: " + df.format(Math.abs(yDiff)) + " Pixel";
 				todoButton.setDirection(BasicArrowButton.SOUTH);
 
 			} else if (yDiff < 0) {
-				todo += "Move Up: " + Math.abs(yDiff) + " Pixel";
+				todo += "Move Up: " + df.format(Math.abs(yDiff)) + " Pixel";
 				todoButton.setDirection(BasicArrowButton.NORTH);
 			}
 
